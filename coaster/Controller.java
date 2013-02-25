@@ -13,7 +13,7 @@ public class Controller {
 
   // declarations required
   protected int noPassengers;  // no. of passengers on the platform
-
+  protected boolean go = false;
 
   public Controller(NumberCanvas nc) {
     passengers = nc;
@@ -33,17 +33,27 @@ public class Controller {
      // complete implementation for part I
      // update for part II
      // use "passengers.setValue(integer value)" to update diplay
-     while (noPassengers < mcar)  {
-       // do nothing
+	  
+	 go = false;		// reset go flag
+	 while (noPassengers < mcar && !go) ;	// do nothing
+     
+     if (noPassengers < mcar){
+    	 mcar = noPassengers;
+    	 noPassengers = 0;
      }
-     noPassengers -= mcar;
+     else{
+    	 noPassengers -= mcar;
+     }
      passengers.setValue(noPassengers);
    
      return mcar;
   }
 
   public synchronized void goNow() {
-    // complete implementation for part II
+	  // complete implementation for part II
+	  if (noPassengers > 0){
+		  go = true;
+	  }
   }
 
 }
