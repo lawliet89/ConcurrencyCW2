@@ -19,12 +19,14 @@ CONTROL[count:0..Max][carSize:0..MCar]
 // the coaster car requests N passengers and departs when the
 // controller responds with getPassenger
 COASTERCAR(N=MCar) 
-    = (arrive -> requestPassenger[N] -> getPassenger[i:1..N] -> 
+    = (arrive -> requestPassenger[N] -> getPassenger[i:1..MCar] -> 
          if (i > N) then ERROR else (depart -> COASTERCAR))
       +{{requestPassenger,getPassenger}[1..MCar]}.
 
 // controls access to the platform
-PLATFORMACCESS = ({arrive,depart} -> PLATFORMACCESS).
+PLATFORMACCESS = PLATFORMACCESS[0],
+PLATFORMACCESS[0] = (arrive -> PLATFORMACCESS[1]),
+PLATFORMACCESS[1] = (depart -> PLATFORMACCESS[0]).
 
 // system with two coaster cars with capacity two and three
 ||ROLLERCOASTER
