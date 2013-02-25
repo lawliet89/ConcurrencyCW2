@@ -7,13 +7,24 @@
 public class PlatformAccess {
 
   /* declarations required */
+  boolean platformOccupied = false;
 
   public void arrive() throws InterruptedException {
-    // complete implementation
+	  // complete implementation
+	  synchronized(this){
+		  while(platformOccupied)
+			  wait();
+		  platformOccupied = true;
+	  }
+	  
   }
 
   public synchronized void depart() {
-    // complete implementation
+	  synchronized(this){
+		  platformOccupied = false;
+		  notifyAll();
+	  }
+	  
   }
 
 }

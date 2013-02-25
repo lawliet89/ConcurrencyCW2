@@ -12,22 +12,36 @@ public class Controller {
   protected NumberCanvas passengers;
 
   // declarations required
+  protected int noPassengers;  // no. of passengers on the platform
 
 
   public Controller(NumberCanvas nc) {
     passengers = nc;
   }
 
-  public void newPassenger() throws InterruptedException {
+  public synchronized void newPassenger() throws InterruptedException {
      // complete implementation
      // use "passengers.setValue(integer value)" to update diplay
+	  while (noPassengers >= Max){
+	    wait();
+	  }
+	  noPassengers++;
+	  notifyAll();
+	  passengers.setValue(noPassengers);
   }
 
-  public int getPassengers(int mcar) throws InterruptedException {
+  public synchronized int getPassengers(int mcar) throws InterruptedException {
      // complete implementation for part I
      // update for part II
      // use "passengers.setValue(integer value)" to update diplay
-     return 0; // dummy value to allow compilation
+     while (noPassengers < mcar)  
+       wait();
+     
+     noPassengers -= mcar;
+     notifyAll();
+     passengers.setValue(noPassengers);
+   
+     return mcar;
   }
 
   public synchronized void goNow() {
