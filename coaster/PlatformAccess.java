@@ -11,19 +11,12 @@ public class PlatformAccess {
 
   public void arrive() throws InterruptedException {
 	  // complete implementation
-	  synchronized(this){
-		  while(platformOccupied)
-			  wait();
-		  platformOccupied = true;
-	  }
-	  
+	  while(platformOccupied);	// do nothing
+	  platformOccupied = true;
   }
 
-  public synchronized void depart() {
-	  synchronized(this){
-		  platformOccupied = false;
-		  notifyAll();
-	  }
+  public void depart() {
+	  platformOccupied = false;
 	  
   }
 
