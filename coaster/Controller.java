@@ -22,9 +22,9 @@ public class Controller {
   public synchronized void newPassenger() throws InterruptedException {
      // complete implementation
      // use "passengers.setValue(integer value)" to update diplay
-	  while (noPassengers >= Max){
+	  while (noPassengers >= Max)
 	    wait();
-	  }
+	  
 	  noPassengers++;
 	  notifyAll();
 	  passengers.setValue(noPassengers);
