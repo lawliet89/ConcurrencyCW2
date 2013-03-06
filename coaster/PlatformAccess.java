@@ -9,15 +9,16 @@ public class PlatformAccess {
   /* declarations required */
   boolean platformOccupied = false;
 
-  public void arrive() throws InterruptedException {
+  public synchronized void arrive() throws InterruptedException {
 	  // complete implementation
-	  while(platformOccupied);	// do nothing
+	  while(platformOccupied)
+		  wait();
 	  platformOccupied = true;
   }
 
-  public void depart() {
+  public synchronized void depart() {
 	  platformOccupied = false;
-	  
+	  notifyAll();	  
   }
 
 }
