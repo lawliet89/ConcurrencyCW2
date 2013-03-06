@@ -19,24 +19,26 @@ public class Controller {
     passengers = nc;
   }
 
-  public void newPassenger() throws InterruptedException {
+  public synchronized void newPassenger() throws InterruptedException {
      // complete implementation
      // use "passengers.setValue(integer value)" to update diplay
-	  while (noPassengers >= Max){
-		  // do nothing
-	  }
+	  while (noPassengers >= Max)
+	    wait();
+	  
 	  noPassengers++;
+	  notifyAll();
 	  passengers.setValue(noPassengers);
   }
 
-  public int getPassengers(int mcar) throws InterruptedException {
+  public synchronized int getPassengers(int mcar) throws InterruptedException {
      // complete implementation for part I
      // update for part II
      // use "passengers.setValue(integer value)" to update diplay
-     while (noPassengers < mcar)  {
-       // do nothing
-     }
+     while (noPassengers < mcar)  
+       wait();
+     
      noPassengers -= mcar;
+     notifyAll();
      passengers.setValue(noPassengers);
    
      return mcar;
